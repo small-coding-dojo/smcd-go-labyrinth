@@ -15,23 +15,25 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	//ebitenutil.DebugPrint(screen, "Hello, World!")
-	g.boardImage = ebiten.NewImage(20, 20)
+	tileSize := 20
+	tileOffset := tileSize + 2
+
+	g.boardImage = ebiten.NewImage(tileSize, tileSize)
 	screen.Fill(color.Color(color.RGBA{0xCC, 0xCC, 0xCC, 0xFF}))
 	g.boardImage.Fill(color.Color(color.RGBA{0x00, 0x00, 0x00, 0xFF}))
 
 	screen.DrawImage(g.boardImage, nil)
 
 	options := &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(float64(22), float64(0))
+	options.GeoM.Translate(float64(tileOffset), float64(0))
 	screen.DrawImage(g.boardImage, options)
 
 	options = &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(float64(0), float64(22))
+	options.GeoM.Translate(float64(0), float64(tileOffset))
 	screen.DrawImage(g.boardImage, options)
 
 	options = &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(float64(22), float64(22))
+	options.GeoM.Translate(float64(tileOffset), float64(tileOffset))
 	screen.DrawImage(g.boardImage, options)
 }
 
