@@ -2,17 +2,6 @@ package main
 
 import "testing"
 
-type Coordinate struct {
-	row    int
-	column int
-}
-
-type Board struct {
-	robot  Coordinate
-	width  int
-	height int
-}
-
 func TestPlaceARobot(t *testing.T) {
 	got := Board{
 		robot: Coordinate{row: 100, column: 100},
