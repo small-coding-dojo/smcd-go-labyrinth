@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/hajimehoshi/ebiten/v2"
 	"image/color"
 	"log"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct {
@@ -11,8 +12,15 @@ type Game struct {
 	board     *Board
 }
 
+var backgroundColor = color.Gray{0xCC}
+var tileColor = color.Black
+
+const tileSize = 20
+
 func NewGame() (*Game, error) {
 	// todo: there should be a NewBoard
+	// todo: width and height shouldn't be hard coded
+	// todo: robot and robot coordinate is dead code / bufd - big upfront design
 	board := &Board{
 		Coordinate{1, 1},
 		2,
@@ -22,6 +30,11 @@ func NewGame() (*Game, error) {
 		tileImage: nil,
 		board:     board,
 	}
+
+	game.tileImage = ebiten.NewImage(tileSize, tileSize)
+	game.tileImage.Fill(tileColor)
+
+	// todo: error handling is not used - yagni, bufd
 	return game, nil
 }
 
@@ -30,13 +43,11 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	tileSize := 20
+	// todo: window size, resolution, tileSize and tileOffset should'n be hard coded (full screen, use maths to calculate)
 	tileOffset := tileSize + 2
 
 	// todo: there should be a board.draw where the tileImage is passed
-	g.tileImage = ebiten.NewImage(tileSize, tileSize)
-	screen.Fill(color.Color(color.RGBA{0xCC, 0xCC, 0xCC, 0xFF}))
-	g.tileImage.Fill(color.Color(color.RGBA{0x00, 0x00, 0x00, 0xFF}))
+	screen.Fill(backgroundColor)
 
 	for row := 0; row < g.board.height; row++ {
 		for column := 0; column < g.board.width; column++ {
@@ -53,7 +64,9 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 
 func main() {
 	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Hello, World!")
+
+	ebiten.SetWindowTitle("smcd go labyrinth")
+
 	game, err := NewGame()
 	if err = ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
