@@ -17,14 +17,13 @@ var tileColor = color.Black
 
 const tileSize = 20
 
-func NewGame() (*Game, error) {
+func NewGame(boardWidth int, boardHeight int) (*Game, error) {
 	// todo: there should be a NewBoard
-	// todo: width and height shouldn't be hard coded
 	// todo: robot and robot coordinate is dead code / bufd - big upfront design
 	board := &Board{
 		Coordinate{1, 1},
-		2,
-		2,
+		boardWidth,
+		boardHeight,
 	}
 	game := &Game{
 		tileImage: nil,
@@ -67,7 +66,8 @@ func main() {
 
 	ebiten.SetWindowTitle("smcd go labyrinth")
 
-	game, err := NewGame()
+	// todo: width and height shouldn't be hard coded
+	game, err := NewGame(2, 2)
 	if err = ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
