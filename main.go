@@ -32,6 +32,7 @@ func NewGame(boardWidth int, boardHeight int) (*Game, error) {
 		board:     board,
 	}
 
+	tileSize := calculateMaximumTileSize(2)
 	game.tileImage = ebiten.NewImage(tileSize, tileSize)
 	game.tileImage.Fill(tileColor)
 
@@ -59,8 +60,13 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return screenWidth / 2, screenHeight / 2
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+	return screenWidth, screenHeight
+}
+
+func calculateMaximumTileSize(tileCount int) int {
+	minValue := min(ebiten.WindowSize())
+	return minValue / tileCount
 }
 
 func main() {
