@@ -15,7 +15,8 @@ type Game struct {
 var backgroundColor = color.Gray{0xCC}
 var tileColor = color.Black
 
-const tileSize = 20
+var tileSize = 20
+
 const screenWidth = 640
 const screenHeight = 480
 
@@ -32,7 +33,7 @@ func NewGame(boardWidth int, boardHeight int) (*Game, error) {
 		board:     board,
 	}
 
-	tileSize := calculateMaximumTileSize(2)
+	tileSize = calculateMaximumTileSize(2)
 	game.tileImage = ebiten.NewImage(tileSize, tileSize)
 	game.tileImage.Fill(tileColor)
 
