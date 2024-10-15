@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+	"testing"
+)
 
 func TestPlaceARobot(t *testing.T) {
 	got := Board{
@@ -46,13 +49,23 @@ func TestBoardHeight(t *testing.T) {
 // When a 2 x 2 board is requested
 // Then the tile size should be 480 / 2 = 240
 func TestTileSizeFor640x480Board(t *testing.T) {
-	got := calculateTileSize(640, 480)
+	got := calculateMaximumTileSize(640, 480, 2)
 	want := 240
 	if got != want {
-		t.Errorf("got %q, but want %q", got, want)
+		t.Errorf("got %d, but want %d", got, want)
 	}
 }
 
-func calculateTileSize(boardWidth, boardHeight int) int {
-	return 240 // Has to be calculated by width and height
+func TestTileSizeFor480x640Board(t *testing.T) {
+	got := calculateMaximumTileSize(480, 640, 2)
+	want := 240
+	if got != want {
+		t.Errorf("got %d, but want %d", got, want)
+	}
+}
+
+func calculateMaximumTileSize(boardWidth, boardHeight, tileCount int) int {
+	ebiten.WindowSize()
+	minValue := min(boardWidth, boardHeight)
+	return minValue / tileCount // Has to be calculated by width and height
 }
