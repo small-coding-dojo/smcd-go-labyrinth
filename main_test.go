@@ -41,3 +41,11 @@ func TestBoardHeight(t *testing.T) {
 		t.Errorf("got %q, but want %q", got.height, someHeight)
 	}
 }
+
+// Given a window size of 640 x 480
+// When a 2 x 2 board is requested
+// Then the tile size should be 480 / 2 = 240
+func Test_(t *testing.T) {
+	// got := calculateTileSize(640, 480)
+	// if got != 240 {}
+}

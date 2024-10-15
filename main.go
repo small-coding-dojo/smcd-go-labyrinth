@@ -16,6 +16,8 @@ var backgroundColor = color.Gray{0xCC}
 var tileColor = color.Black
 
 const tileSize = 20
+const screenWidth = 640
+const screenHeight = 480
 
 func NewGame(boardWidth int, boardHeight int) (*Game, error) {
 	// todo: there should be a NewBoard
@@ -58,11 +60,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return screenWidth / 2, screenHeight / 2
 }
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(screenWidth, screenHeight)
 
 	ebiten.SetWindowTitle("smcd go labyrinth")
 
